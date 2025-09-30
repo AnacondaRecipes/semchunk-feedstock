@@ -11,6 +11,7 @@ source:
   sha256: 22182fb6d9dc6fdf671242917284f7be67c2cf81806b642ab2aaf65c65e99ea4
 
 build:
+  skip: true  # [py<39]
   script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
   number: 0
 
@@ -23,7 +24,7 @@ requirements:
     - python
     - tqdm
     - mpire
-    - multiprocess >=0.70.15
+    - multiprocess >=0.70.15  # mpire[dill]
 
 test:
   imports:
