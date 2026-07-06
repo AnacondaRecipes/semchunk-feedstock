@@ -1,17 +1,16 @@
 {% set name = "semchunk" %}
-{% set version = "3.2.2" %}
-
+{% set version = "4.1.1" %}
 
 package:
-  name: {{ name|lower }}
+  name: {{ name }}
   version: {{ version }}
 
 source:
   url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/semchunk-{{ version }}.tar.gz
-  sha256: 22182fb6d9dc6fdf671242917284f7be67c2cf81806b642ab2aaf65c65e99ea4
+  sha256: f27dc85716a0e9509a3f99c78b961cc476b3120efe711ee9a9a950ed1bd0f8ba
 
 build:
-  skip: true  # [py<39]
+  skip: true  # [py<310]
   script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
   number: 0
 
@@ -23,16 +22,22 @@ requirements:
   run:
     - python
     - tqdm
-    - mpire
-    - multiprocess >=0.70.15  # mpire[dill]
+    - dill  # [win]
 
 test:
+  source_files:
+    - tests
   imports:
     - semchunk
   commands:
     - pip check
+    - pytest -vv tests
   requires:
     - pip
+    - pytest
+    - tiktoken >=0.9.0
+    - nltk >=3.9.1
+    - transformers >=4.52.4
 
 about:
   summary: A fast, lightweight and easy-to-use Python library for splitting text into semantically meaningful chunks.
