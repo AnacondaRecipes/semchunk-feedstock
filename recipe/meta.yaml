@@ -25,12 +25,19 @@ requirements:
     - dill  # [win]
 
 test:
+  source_files:
+    - tests
   imports:
     - semchunk
   commands:
     - pip check
+    - pytest -vv tests
   requires:
     - pip
+    - pytest
+    - tiktoken >=0.9.0
+    - nltk >=3.9.1
+    - transformers >=4.52.4
 
 about:
   summary: A fast, lightweight and easy-to-use Python library for splitting text into semantically meaningful chunks.
